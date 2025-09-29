@@ -1,3 +1,5 @@
 Flask==3.1.2
 SQLAlchemy==2.0.43
 Flask-SQLAlchemy==3.1.1
+os
+dotenv==0.9.9
