@@ -1,6 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
 
-
 db = SQLAlchemy()
 
 movies_users = db.Table(
@@ -15,9 +14,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(100), nullable=False)
 
-    # one user can have many movies in his list and many users can also have one movie in many lists
-    # so this is a many-to-many relationship
-    # so use a helper table (movies_users) to link user_id with movie_id
+    # use a helper table (movies_users) to link user_id to movie_id
 
     movies = db.relationship("Movie", secondary=movies_users, back_populates="users")
 
