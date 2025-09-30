@@ -1,29 +1,31 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1> {{ title }} </h1>
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-<div>
-    {{ messages[0] }}
-</div>
-{% endif %}
-{% endwith %}
-{% for user in users %}
+<!-- Index block starts -->
 
-<div>
-    <div><a href="{{ url_for('get_movies', user_id=user.id) }}" alt="{{user.name}}">{{ user.name }}</a></div>
-    <button>Edit Profile</button><button>Delete Profile</button>
+<!-- user card -->
+<div class="card_container">
+    {% for user in users %}
+    <a href="{{ url_for('get_movies', user_id=user.id) }}" alt="{{user.name}}">
+        <div class="card">
+            <h4>{{ user.name }}</h4>
+            <img src="{{ url_for('static', filename='img/profil_img.jpg') }}" height="150" width="150"
+                 alt="Profile Image">
+            <form action="{{ url_for('delete_user', user_id=user.id) }}" method="post">
+                <button type="submit">Delete Profile</button>
+            </form>
+        </div>
+    </a>
+    {% endfor %}
 </div>
 
-{% endfor %}
-<h2>Create new Profile</h2>
-<div>
-    <form action="{{ url_for('create_user') }}" method="post">
-        <label for="name">Enter Username:</label>
-        <input type="text" id="name" name="name" required><br><br>
-        <Button type="submit" value="Add Profile">Create new Profile</Button>
-    </form>
+<!-- Add Profile -->
+<div class="forms">
+    <h4>Create new Profile</h4>
+        <form action="{{ url_for('create_user') }}" method="post">
+            <label for="name">Enter Username:</label>
+            <input type="text" id="name" name="name" required>
+            <Button type="submit" value="Add Profile">Create new Profile</Button>
+        </form>
 </div>
-{{ message }}
 {% endblock %}

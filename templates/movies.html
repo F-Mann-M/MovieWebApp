@@ -1,31 +1,44 @@
 {% extends "base.html" %}
 
-{% block content %}
-<h1> {{ title }} </h1>
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <div>
-      {{ messages[0] }}
-    </div>
-  {% endif %}
-{% endwith %}
 
-{% for movie in movies %}
-<div>
-    Title: {{ movie.title }}</br>
-    Year: {{ movie.year }}</br>
-    Director: {{ movie.director }}</br>
-    <img src="{{movie.poster_url}}" alt="movie.title"></br>
-    <form action="{{ url_for('remove_movie_from_favorites', user_id=user.id, movie_id=movie.id) }}" method="post">
-    <button type="submit">Delete Title</button></form>
-    <form action="{{ url_for('update_movie', user_id=user.id, movie_id=movie.id) }}" method="post">
-    <button type="submit">Update Title</button></form>
+{% block content %}
+
+<!-- Add Movie -->
+<div class="forms">
+    <h3>Add new Movie</h3>
+    <form action="{{ url_for('add_movie', user_id=user.id) }}" method="post">
+        <label for="title">Enter Title:</label>
+        <input type="text" id="title" name="title" required>
+        <button type="submit">Add Movie</button>
+    </form>
 </div>
-{% endfor %}
-<h2>Add new Movie</h2>
-<form action="{{ url_for('add_movie', user_id=user.id) }}" method="post">
-    <label for="title">Enter Title:</label>
-    <input type="text" id="title" name="title" required><br><br>
-    <button type="submit">Add Movie</button>
-</form>
+
+<!-- Movie Crad -->
+<div class="card_container">
+    {% for movie in movies %}
+    <div class="movie_card">
+
+        <h3>{{ movie.title }}</h3></br>
+        <img src="{{movie.poster_url}}" alt="movie.title"></br>
+        <strong>Released Year: </strong>{{ movie.year }}</br>
+        <strong>Director: </strong>{{ movie.director }}</br></br>
+        <form action="{{ url_for('remove_movie_from_favorites', user_id=user.id, movie_id=movie.id) }}" method="post">
+            Delete title form your list
+            <button type="submit">Delete Title</button>
+        </form>
+        <form action="{{ url_for('update_movie', user_id=user.id, movie_id=movie.id) }}" method="post">
+            <label for="update">Rename Title</label>
+            <input type="text" id="update" name="new_title" required>
+            <button type="submit">Update</button>
+        </form>
+    </div>
+    {% endfor %}
+
+</div>
+
+     <!-- Menu -->
+    <div class="menu">
+        <a href="/"><button>Home</button></a>
+    </div>
+
 {% endblock %}

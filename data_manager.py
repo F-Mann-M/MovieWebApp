@@ -35,13 +35,27 @@ class DataManager:
 
     def delete_user(self, user_id):
         """delete_user from users table"""
-        user = user = db.session.query(User).get(user_id)
+        user = db.session.query(User).get(user_id)
+        if user:
+            db.session.delete(user)
+            db.session.commit()
+            return f"User '{user.name}' was successfully removed!"
+        else:
+            return "User not found database."
+
+
+    def update_user(self, user_id, new_name):
+        """updates from users table"""
+        user = db.session.query(User).get(user_id)
+        user.name = new_name
+
         if user:
             db.session.delete(user)
             db.session.commit()
             return f"User {user.name} was successfully removed!"
         else:
             return "User not found database."
+
 
 
     # Movie management

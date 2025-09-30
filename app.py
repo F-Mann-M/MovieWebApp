@@ -16,17 +16,11 @@ db.init_app(app)
 app.secret_key = os.getenv("FLASK_KEY") # need a kee to redirect messages in a get method
 
 
-@app.route("/flash_test")
-def flash_test():
-    message = "This is a test flash message!"
-    flash(message)
-    return redirect(url_for("index"))
-
 @app.route("/")
 def index():
     """Loads a list of users and renders index.html"""
     users = data_manager.get_users()
-    return render_template("index.html", users=users, title="Users")
+    return render_template("index.html", users=users, title="MyMovieApp")
 
 
 @app.route('/users/<int:user_id>/movies', methods=['GET'])
@@ -34,11 +28,12 @@ def get_movies(user_id):
     """Get users id and returns list of movies linked to the user_id"""
     movies = data_manager.get_movies(user_id)
     user = data_manager.get_user(user_id)
+    message = ""
     if not movies:
         message = "Movie list empty"
     else:
         message = f"{user.name}'s Movies"
-    return render_template("movies.html", message=message, user=user, movies=movies)
+    return render_template("movies.html", message=message, user=user, movies=movies, title=f"{user.name}'s Movie List")
 
 
 @app.route('/users/<int:user_id>/movies', methods=['POST'])
@@ -58,7 +53,7 @@ def add_movie(user_id):
 @app.route('/users/<int:user_id>/movies/<int:movie_id>/update', methods=['POST'])
 def update_movie(user_id, movie_id):
     """Takes in movie id and title. if movie id in movies table updates title and renders index.html"""
-    title = request.form.get("title")
+    title = request.form.get("new_title")
     message = data_manager.update_movie(title, movie_id)
     flash(message)
     return redirect(url_for("get_movies", user_id=user_id))
@@ -76,12 +71,18 @@ def remove_movie_from_favorites(movie_id, user_id):
 def create_user():
     message = ""
     name = request.form.get("name")
-
     if name:
         message = data_manager.create_user(name)
-    users = data_manager.get_users()
-    return render_template("index.html", message=message, users=users, title="Users")
+    flash(message)
+    return redirect(url_for("index"))
 
+
+@app.route('/users/<int:user_id>/delete', methods=['POST'])
+def delete_user(user_id):
+    """delets user form table users"""
+    message = data_manager.delete_user(user_id)
+    flash(message)
+    return redirect(url_for("index"))
 
 
 if __name__ == "__main__":

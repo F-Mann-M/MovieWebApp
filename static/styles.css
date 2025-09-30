@@ -1,0 +1,125 @@
+* {
+    box-sizing: border-box;
+    margin-top: 0;
+    padding: 0;
+}
+
+html, body {
+    font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: lightgray;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    height: fit-content;
+}
+
+.menu {
+    align-self: flex-start;
+    padding: 10px;
+    background-color: #434343;
+    width: 100%;
+}
+
+.header {
+    width: 100%;
+    padding: 10px 15px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
+
+
+.card_container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-flow: wrap;
+    justify-content: space-evenly;
+    align-items: flex-end; /* upper part */
+}
+
+.card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem;
+    width: 200px;
+    text-align: center;
+    cursor: pointer;
+    background: #ffffff;
+    transition: box-shadow 0.3s ease;
+    min-height: 250px;
+}
+
+
+.movie_card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 10px;
+    width: 320px;
+    text-align: left;
+    cursor: pointer;
+    background: #ffffff;
+    transition: box-shadow 0.3s ease;
+    height: auto;
+    font-size: 10pt;
+}
+
+.movie_card img {
+    max-width: 100%;   /* scale down to card width */
+    max-height: 100%;      /* keep aspect ratio */
+    display: block;    /* removes bottom inline gap */
+    border-radius: 4px; /* optional: rounded corners for image */
+}
+
+.card:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.card-body {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.forms {
+    background-color: #434343;
+    color: white;
+    text-align: left;
+    padding: 15px 15px 30px 10px;
+}
+
+
+button {
+    margin-top: 0.5rem;
+    background: red;
+    color: white;
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+a,a:visited, a:hover, a:active {
+    text-decoration: none;
+    color: #808080;
+}
