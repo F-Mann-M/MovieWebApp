@@ -86,7 +86,7 @@ def delete_user(user_id):
 
 
 @app.errorhandler(404)
-def not_found(error):
+def page_not_found(error):
     # You can flash a message, log it, or just render a page
     return render_template("404.html", error=error), 404
 
