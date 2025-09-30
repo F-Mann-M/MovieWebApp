@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, flash, url_for
-from models import db, Movie, User
+from models import db
 from data_manager import DataManager
 from dotenv import load_dotenv
 import os
@@ -60,7 +60,7 @@ def update_movie(user_id, movie_id):
 
 
 @app.route('/users/<int:user_id>/movies/<int:movie_id>/delete', methods=['POST'])
-def remove_movie_from_favorites(movie_id, user_id):
+def remove_movie_from_favorites(user_id, movie_id):
     """Removes link between user and movie id to remove it from users movie list. Movie stays in table movies"""
     message = data_manager.remove_movie_from_favorites(movie_id, user_id)
     flash(message)
@@ -84,6 +84,11 @@ def delete_user(user_id):
     flash(message)
     return redirect(url_for("index"))
 
+
+@app.errorhandler(404)
+def not_found(error):
+    # You can flash a message, log it, or just render a page
+    return render_template("404.html", error=error), 404
 
 if __name__ == "__main__":
     # create table

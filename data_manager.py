@@ -1,6 +1,4 @@
-from flask import jsonify
-
-from models import db, User, Movie, movies_users
+from models import db, User, Movie
 from dotenv import load_dotenv
 import os, requests
 
@@ -12,6 +10,11 @@ class DataManager:
     # User management
     def create_user(self, name):
         """Add new user to users table"""
+
+        check_user_name = db.session.query(User).filter(User.name==name).first()
+        if check_user_name:
+            return f"User '{name}' already exists."
+
         user = User(name=name)
         db.session.add(user)
         db.session.commit()
@@ -57,7 +60,6 @@ class DataManager:
             return "User not found database."
 
 
-
     # Movie management
     def get_movies(self, user_id):
         """ get list of movies form movies table"""
@@ -94,7 +96,7 @@ class DataManager:
         # Get user object from User
         user = db.session.query(User).get(user_id)
         if not user:
-            raise ValueError(f"User {user_id} not found")
+            return f"User {user_id} not found"
 
         if new_movie not in user.movies:
             # Link user to movie
@@ -110,7 +112,7 @@ class DataManager:
         movie = db.session.query(Movie).get(movie_id) # the new execute seams not to work for flask-sqlalchemy?!
 
         if not movie:
-            raise ValueError(f"Movie with id {movie_id} not found")
+            return f"Movie with id {movie_id} not found"
 
         movie.title = new_title
         db.session.commit()
@@ -128,7 +130,7 @@ class DataManager:
         movie = db.session.query(Movie).get(movie_id)
 
         if not movie:
-            raise ValueError(f"Movie with id {movie_id} not found")
+            return f"Movie with id {movie_id} not found"
 
         db.session.delete(movie)
         db.session.commit()
