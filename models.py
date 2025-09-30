@@ -26,7 +26,7 @@ class Movie(db.Model):
     __tablename__= "movies"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    title = db.Column(db.String(200), nullable=False)
+    title = db.Column(db.String(200), unique=True, nullable=False)
     director = db.Column(db.String(100))
     year = db.Column(db.Integer)
     poster_url = db.Column(db.String)

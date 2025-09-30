@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1> {{ title }} </h1>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div>
+    {{ messages[0] }}
+</div>
+{% endif %}
+{% endwith %}
+{% for user in users %}
+
+<div>
+    <div><a href="{{ url_for('get_movies', user_id=user.id) }}" alt="{{user.name}}">{{ user.name }}</a></div>
+    <button>Edit Profile</button><button>Delete Profile</button>
+</div>
+
+{% endfor %}
+<h2>Create new Profile</h2>
+<div>
+    <form action="{{ url_for('create_user') }}" method="post">
+        <label for="name">Enter Username:</label>
+        <input type="text" id="name" name="name" required><br><br>
+        <Button type="submit" value="Add Profile">Create new Profile</Button>
+    </form>
+</div>
+{{ message }}
+{% endblock %}
