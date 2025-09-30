@@ -109,7 +109,7 @@ class DataManager:
 
     def update_movie(self, new_title, movie_id):
         """ takes in new title, director, year and movie_id, updates movie in database"""
-        movie = db.session.query(Movie).get(movie_id) # the new execute seams not to work for flask-sqlalchemy?!
+        movie = db.session.query(Movie).get(movie_id)
 
         if not movie:
             return f"Movie with id {movie_id} not found"

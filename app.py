@@ -13,7 +13,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(basedir, 'data
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
-app.secret_key = os.getenv("FLASK_KEY") # need a kee to redirect messages in a get method
+app.secret_key = os.getenv("FLASK_KEY")
 
 
 @app.route("/")
@@ -43,9 +43,7 @@ def add_movie(user_id):
     and linked to the users id (via movies_users helper table)
     """
     title = request.form.get("title")
-    user = data_manager.get_user(user_id)
     message = data_manager.add_movie(title, user_id)
-    movies = data_manager.get_movies(user_id)
     flash(message) # use flash to keep the message even using a GET method for redirect
     return redirect(url_for("get_movies", user_id=user_id))
 
